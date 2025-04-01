@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusTrade</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --matte-blue: #3a6ea5;
+      --matte-blue-dark: #2a4e75;
+      --matte-blue-light: #8fb8de;
+      --white: #ffffff;
+      --black: #333333;
+      --orange: #ff8c42;
+      --gray: #e0e0e0;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--matte-blue);
+      color: var(--white);
+      padding: 20px 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 20px;
+      color: var(--orange);
+    }
+
+    .navbar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      margin-right: 20px;
+    }
+
+    .navbar ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+
+    .navbar ul li a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .navbar ul li a:hover {
+      color: var(--matte-blue-light);
+    }
+
+    .parallax-section {
+      height: 100vh;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      text-align: center;
+    }
+
+    #home {
+      background-image: url('https://images.pexels.com/photos/207691/pexels-photo-207691.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    }
+
+    #faq {
+      background-image: url('https://images.pexels.com/photos/256559/pexels-photo-256559.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    }
+
+    #new-parallax {
+      background-image: url('https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    }
+
+    .auth-buttons {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .auth-buttons h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: var(--white);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-buttons p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--white);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .auth-buttons button {
+      background: var(--matte-blue);
+      border: none;
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: var(--white);
+      width: 200px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .auth-buttons button:hover {
+      background: var(--matte-blue-dark);
+      transform: scale(1.05);
+    }
+
+    .middle-div {
+      background: var(--gray);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .gallery-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .gallery {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      margin: 0 10px;
+    }
+
+    .middle-div button {
+      background: var(--matte-blue);
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: var(--white);
+      margin-top: 20px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .middle-div button:hover {
+      background: var(--matte-blue-dark);
+      transform: scale(1.05);
+    }
+
+    .testimonials {
+      background: var(--gray);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .testimonials h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--matte-blue);
+    }
+
+    .testimonial-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .testimonial {
+      background: var(--matte-blue);
+      padding: 20px;
+      border-radius: 10px;
+      width: 45%;
+      max-width: 400px;
+      color: var(--white);
+    }
+
+    .testimonial p {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .testimonial p:last-child {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .featured-items {
+      background: var(--matte-blue-light);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .featured-items h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--matte-blue);
+    }
+
+    .item-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .item {
+      background: var(--white);
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 150px;
+    }
+
+    .item img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .item p {
+      font-size: 14px;
+      color: var(--black);
+      margin-top: 10px;
+    }
+
+    .how-it-works {
+      background: var(--matte-blue-light);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .how-it-works h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--matte-blue);
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .step {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 200px;
+      text-align: center;
+    }
+
+    .step img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+    }
+
+    .step p {
+      font-size: 16px;
+      color: var(--black);
+    }
+
+    .faq-container {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      margin-bottom: 15px;
+    }
+
+    .faq-question {
+      background: var(--matte-blue);
+      padding: 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 18px;
+      color: var(--white);
+    }
+
+    .faq-answer {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 5px;
+      display: none;
+      overflow: hidden;
+      color: var(--black);
+      transition: all 0.5s ease;
+    }
+
+    .faq-answer.open {
+      display: block;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      background: var(--matte-blue);
+      color: var(--white);
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--matte-blue-light);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow: auto;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--black);
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: var(--matte-blue);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--black);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--gray);
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .form-submit {
+      background: var(--matte-blue);
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: var(--white);
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background: var(--matte-blue-dark);
+    }
+
+    .modal-footer {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .modal-footer button {
+      background: var(--matte-blue);
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: var(--white);
+      transition: background 0.3s ease;
+    }
+
+    .modal-footer button:hover {
+      background: var(--matte-blue-dark);
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">CampusTrade</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#faq">FAQs</a></li>
+      <li><a href="#footer">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <section class="parallax-section" id="home">
+    <div class="auth-buttons">
+      <h1>Anything and Everything You Need</h1>
+      <p>Rent or buy basic necessities for all students on campus.</p>
+      <button onclick="openModal('registerModal')">Register Now</button>
+      <button onclick="openModal('signinModal')">Sign In</button>
+    </div>
+  </section>
+
+  <div class="middle-div">
+    <div class="gallery-container">
+      <div class="gallery" id="gallery">
+        <img src="https://m.media-amazon.com/images/I/61JQ0TRBy7L.jpg" alt="Cycle">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVyL-vK8aIf1CToDQBDOEC39z1PVnf1gIIcQ&s" alt="Pans">
+        <img src="https://images-cdn.ubuy.co.in/65d2bd72b1afe640d46a7e3f-304-stainless-steel-kitchen-utensils-9.jpg" alt="Utensils">
+        <img src="https://www.walnutpublication.com/blog/wp-content/uploads/2024/04/6897358.jpg" alt="Books">
+        <img src="https://i1.wp.com/www.theotheraesthetic.com/wp-content/uploads/2022/12/Simple-Dorm-Aesthetic-edited.jpg" alt="Dorm Room">
+        <img src="https://media.istockphoto.com/id/1215148288/vector/cartoon-color-sport-equipment-icon-set-vector.jpg?s=2048x2048&w=is&k=20&c=VorljqHYY0ibhHW9FIh6ZDPSgH6DRV-K4CnPA9WcOMI=" alt="Sports Equipment">
+        <img src="https://images-cdn.ubuy.co.in/654003ca45a4726dab4a4ee7-phone-charger-2-pack-20w-charging-cable.jpg" alt="Phone Charger">
+        <img src="https://rukminim2.flixcart.com/image/850/1000/jhs0o7k0/pendrive/pendrive/d/a/z/sandisk-16gb-pendrive-original-imaeqzygvj6ggmhk.jpeg?q=90&crop=false" alt="Pendrive">
+        <img src="https://m.media-amazon.com/images/I/61l33dfloaL.jpg" alt="Laptop">
+        <img src="https://m.media-amazon.com/images/I/518UgjUITbL.jpg" alt="Headphones">
+        <img src="https://i0.wp.com/wisycart.com/wp-content/uploads/2022/11/DMB24in-1-jpg.webp" alt="Desk Lamp">
+        <img src="https://ik.imagekit.io/anscommerce/image/tr:e-usm-2-2-0.8-0.024,dpr-3,h-140,w-140,q-85,cm-pad_resize/data/philips/14-sep-2021/8710103855101.jpg" alt="Electric Kettle">
+        <img src="https://m.media-amazon.com/images/I/71Kdsxh87wL._AC_UY1100_.jpg" alt="Item 13">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx5cJiOSpbAxebtmKcQtR_Fgii11vc1XxJRA&s" alt="Item 14">
+        <img src="https://www.ikea.com/in/en/images/products/vardagen-cooks-knife-dark-grey__0710394_pe727522_s5.jpg" alt="Item 15">
+        <img src="https://images-cdn.ubuy.co.in/6756b31bc7520c1725746a3e-mora-ceramic-artisan-matte-dinner-plates.jpg" alt="Item 16">
+        <img src="https://m.media-amazon.com/images/I/61trFui8wOL._AC_UF894,1000_QL80_.jpg" alt="Item 17">
+        <img src="https://m.media-amazon.com/images/I/51Q11RNy8dL._AC_UF894,1000_QL80_.jpg" alt="Item 18">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlpmz5GAw-Cnbv8BEVpPpkCWW2HZWJB-l7Aw&s" alt="Item 19">
+        <img src="https://images-cdn.ubuy.co.in/666a357a99c6f06817793d39-karinear-portable-electric-cooktop.jpg" alt="Item 20">
+        <img src="https://res.cloudinary.com/lusini/w_1500,h_1500,q_80,c_pad,f_auto/pim/a687aa/6c2126/f635e3/58b293/178575/9d/a687aa6c2126f635e358b2931785759d.jpeg" alt="Item 21">
+        <img src="https://www.ikea.com/in/en/images/products/micke-desk-black-brown__0735981_pe740299_s5.jpg" alt="Item 22">
+        <img src="https://m.media-amazon.com/images/I/81u+LWxOCiL.jpg" alt="Item 23">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5PB4uq2SqJyVr0k1J9uLpRAhP5GvWE8hELg&s" alt="Item 24">
+      </div>
+    </div>
+    <button onclick="location.href='#faq'">Get Started</button>
+  </div>
+
+  <section class="featured-items">
+    <h2>Featured Items</h2>
+    <div class="item-grid">
+      <div class="item">
+        <img src="https://m.media-amazon.com/images/I/61JQ0TRBy7L.jpg" alt="Bicycle">
+        <p>Bicycle - $10/day</p>
+      </div>
+      <div class="item">
+        <img src="https://www.walnutpublication.com/blog/wp-content/uploads/2024/04/6897358.jpg" alt="Textbook">
+        <p>Textbook - $5/day</p>
+      </div>
+      <div class="item">
+        <img src="https://images-cdn.ubuy.co.in/65d2bd72b1afe640d46a7e3f-304-stainless-steel-kitchen-utensils-9.jpg" alt="Utensils">
+        <p>Utensils - $2/day</p>
+      </div>
+      <div class="item">
+        <img src="https://i1.wp.com/www.theotheraesthetic.com/wp-content/uploads/2022/12/Simple-Dorm-Aesthetic-edited.jpg" alt="Dorm Room">
+        <p>Dorm Room - $20/day</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="parallax-section" id="new-parallax">
+    <h2>Explore More</h2>
+  </section>
+
+  <section class="testimonials" id="testimonials">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-container">
+      <div class="testimonial">
+        <p>"CampusTrade made it so easy to rent a bicycle for the semester. Highly recommend!"</p>
+        <p>- John, Engineering Student</p>
+      </div>
+      <div class="testimonial">
+        <p>"I found a great deal on textbooks and even rented out my old ones. Awesome platform!"</p>
+        <p>- Sarah, Business Student</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step">
+        <img src="a.png" alt="Register">
+        <p>1. Register with your campus email.</p>
+      </div>
+      <div class="step">
+        <img src="b.png" alt="List Items">
+        <p>2. List items you want to trade or rent.</p>
+      </div>
+      <div class="step">
+        <img src="c.png" alt="Trade/Rent">
+        <p>3. Connect with others and start trading/renting!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="parallax-section" id="faq">
+    <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleAnswer(1)">Can we trade with any campus students?</div>
+        <div class="faq-answer" id="answer1">Trading and renting will only be allowed within the same campus.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleAnswer(2)">How will it be ensured that trading remains within campus?</div>
+        <div class="faq-answer" id="answer2">Each college will have its own email ID system for students. To register, students must use their college email ID, which will grant them access to the trading/renting platform.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleAnswer(3)">What items can I list for rent or sale?</div>
+        <div class="faq-answer" id="answer3">You can list any item for rent or sale, including bicycles, utensils, rooms (if you're leaving for a few days), books, and more.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleAnswer(4)">How will it be ensured that the person returns the rented item on time?</div>
+        <div class="faq-answer" id="answer4">If the person is unable to return the item on time without extending the rental period, they will be charged an additional fee for each day the item is not returned.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleAnswer(5)">What is the payment procedure?</div>
+        <div class="faq-answer" id="answer5">Payment must be made through the website using online payment methods. The item can then be collected from the other person in an in-person transaction.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:support@campustrade.com">support@campustrade.com</a></p>
+    <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+  </footer>
+
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('registerModal')">&times;</span>
+      <h2>Register</h2>
+      <form>
+        <div class="form-group">
+          <label for="regName">Full Name</label>
+          <input type="text" id="regName" required>
+        </div>
+        <div class="form-group">
+          <label for="regEmail">Campus Email</label>
+          <input type="email" id="regEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="regConfirmPassword">Confirm Password</label>
+          <input type="password" id="regConfirmPassword" required>
+        </div>
+        <button type="submit" class="form-submit">Register</button>
+      </form>
+      <div class="modal-footer">
+        <button onclick="location.href='#faq'">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="signinModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('signinModal')">&times;</span>
+      <h2>Sign In</h2>
+      <form>
+        <div class="form-group">
+          <label for="signinEmail">Campus Email</label>
+          <input type="email" id="signinEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="signinPassword">Password</label>
+          <input type="password" id="signinPassword" required>
+        </div>
+        <button type="submit" class="form-submit">Sign In</button>
+      </form>
+      <div class="modal-footer">
+        <button onclick="location.href='#faq'">Get Started</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleAnswer(id) {
+      const answer = document.getElementById(`answer${id}`);
+      answer.classList.toggle('open');
+    }
+
+    const gallery = document.getElementById('gallery');
+    const images = gallery.querySelectorAll('img');
+    const totalImages = images.length;
+    let currentIndex = 0;
+
+    function moveGallery() {
+      currentIndex = (currentIndex + 2) % totalImages;
+      const offset = -currentIndex * 170;
+      gallery.style.transform = `translateX(${offset}px)`;
+    }
+
+    setInterval(moveGallery, 3000);
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target.className === 'modal') {
+        event.target.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
